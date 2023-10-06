@@ -1,0 +1,11 @@
+.task-control {
+  color: rgb(72, 12, 12);
+  text-align: left;
+  align-items: center;
+  margin-top: 20px;
+  box-shadow: 5px 10px 10px rgba(130, 129, 129, 0.5);
+  background-color: rgb(249, 248, 211);
+}
+.icon-content {
+  color: rgb(82, 5, 64);
+}
