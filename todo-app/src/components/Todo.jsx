@@ -9,12 +9,32 @@ function Todo(props) {
     const [input, setInput] = useState('')
     // todo state used to stored tasks in array format
     const [todo, setTodo] = useState([])
+    // create new state for  storing id of perticular product which one we want to edit
+    const [taskId, setTaskId] = useState(0)
 
 
 
     const addTodo = () => {
-        setTodo([...todo, { task: input, id: Date.now(), status: false }]);
-        setInput('');
+        if (input !== '') {
+            setTodo([...todo, { task: input, id: Date.now(), status: false }]);
+            setInput('');
+        }
+        if (taskId) {
+            const taskObject = todo.find((i) => i.id === taskId)
+            const updateTask = todo.map((item) => {
+                if (item.id === taskId) {
+                    return (
+                        { ...item, task: input }
+                    )
+                }
+                return item
+            })
+            setTodo(updateTask)
+            setTaskId(0)
+            setInput('')
+
+        }
+
     }
 
     const taskDelete = (id) => {
@@ -28,7 +48,16 @@ function Todo(props) {
                     { ...i, status: !i.status }
                 )
             }
+            return i
         })
+        setTodo(task)
+    }
+
+    const taskEdit = (id) => {
+        let task = todo.find((item) => item.id === id);
+        console.log(task.task);
+        setInput(task.task)
+        setTaskId(task.id)
     }
 
     const inputRef = useRef('null')
@@ -42,7 +71,7 @@ function Todo(props) {
                 <h1 className='mb-4 text-white'>TODO APP</h1>
                 <form action="" className='form-outline' onSubmit={(e) => e.preventDefault()} >
                     <input type="text" className='w-100 form-control m-2' value={input} ref={inputRef} placeholder='Enter your task' onChange={(event) => setInput(event.target.value)} />
-                    <button className='w-50 btn btn-dark mt-3 fw-bold' onClick={addTodo} > SAVE TASK </button>
+                    <button className='w-50 btn btn-dark mt-3 fw-bold' onClick={addTodo} > {taskId ? 'UPDATE TASK' : 'SAVE TASK'} </button>
                 </form>
             </div>
 
@@ -60,7 +89,7 @@ function Todo(props) {
                             </li>
                             <div className='todo-icons text-success'>
                                 <BsCheck2All className='icons' id='complete' onClick={() => taskComplete(todoObj.id)} title='Complete' />
-                                <BiEdit className='icons text-info' title='Edit' id='edit' onClick={() => console.log('edit')} />
+                                <BiEdit className='icons text-info' title='Edit' id='edit' onClick={() => taskEdit(todoObj.id)} />
                                 <AiFillDelete className='icons text-danger' title='Delete' id='delete' onClick={() => taskDelete(todoObj.id)} />
                             </div>
                         </div>
