@@ -1,4 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { BiEdit } from 'react-icons/bi'
+import { AiFillDelete } from 'react-icons/ai'
+import { BsCheck2All } from 'react-icons/bs'
 import './css/Todo.css'
 
 function Todo(props) {
@@ -36,7 +39,21 @@ function Todo(props) {
                     <h3>MY TASKS</h3>
                 </div>
                 <ul className='text-left'>
-                    {todo.map((task) => <li className='form-control task-control'><span className='icon-content'><i className="bi bi-star-fill"></i></span> {task} </li>)}
+                    {todo.map((task) => (
+                        <div className='todo-task'>
+                            <li className='form-control task-control'>
+                                <span className='icon-content'>
+                                    <i className="bi bi-star-fill"></i>
+                                </span> {task}
+                            </li>
+                            <div className='todo-icons text-success'>
+                                <BsCheck2All className='icons' id='complete' onClick={() => console.log('complete')} title='Complete' />
+                                <BiEdit className='icons text-info' title='Edit' id='edit' onClick={() => console.log('edit')} />
+                                <AiFillDelete className='icons text-danger' title='Delete' id='delete' onClick={() => console.log('delete')} />
+                            </div>
+                        </div>
+                    )
+                    )}
                 </ul>
             </div>
         </div>

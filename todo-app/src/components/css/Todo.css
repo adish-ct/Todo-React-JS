@@ -9,3 +9,20 @@
 .icon-content {
   color: rgb(82, 5, 64);
 }
+.todo-task {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+}
+.todo-icons {
+  display: flex;
+  gap: 10px;
+  font-size: 15px;
+  align-items: center;
+}
+.icons {
+  font-size: 20px;
+  margin-top: auto;
+  cursor: pointer;
+}
