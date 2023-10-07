@@ -26,3 +26,8 @@
   margin-top: auto;
   cursor: pointer;
 }
+#input-item {
+  text-decoration: line-through;
+  opacity: 0.5;
+  color: red;
+}

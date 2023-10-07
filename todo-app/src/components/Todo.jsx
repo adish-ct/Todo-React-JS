@@ -13,12 +13,22 @@ function Todo(props) {
 
 
     const addTodo = () => {
-        setTodo([...todo, { task: input, id: Date.now() }]);
+        setTodo([...todo, { task: input, id: Date.now(), status: false }]);
         setInput('');
     }
 
-    const todoDelete = (id) => {
+    const taskDelete = (id) => {
         setTodo(todo.filter((to) => to.id !== id))
+    }
+
+    const taskComplete = (id) => {
+        let task = todo.map((i) => {
+            if (i.id === id) {
+                return (
+                    { ...i, status: !i.status }
+                )
+            }
+        })
     }
 
     const inputRef = useRef('null')
@@ -43,15 +53,15 @@ function Todo(props) {
                 <ul className='text-left'>
                     {todo.map((todoObj) => (
                         <div className='todo-task'>
-                            <li className='form-control task-control'>
+                            <li className='form-control task-control' id={todoObj.status ? 'input-item' : ''}>
                                 <span className='icon-content'>
                                     <i className="bi bi-star-fill"></i>
                                 </span> {todoObj.task}
                             </li>
                             <div className='todo-icons text-success'>
-                                <BsCheck2All className='icons' id='complete' onClick={() => console.log('complete')} title='Complete' />
+                                <BsCheck2All className='icons' id='complete' onClick={() => taskComplete(todoObj.id)} title='Complete' />
                                 <BiEdit className='icons text-info' title='Edit' id='edit' onClick={() => console.log('edit')} />
-                                <AiFillDelete className='icons text-danger' title='Delete' id='delete' onClick={todoDelete(todoObj.id)} />
+                                <AiFillDelete className='icons text-danger' title='Delete' id='delete' onClick={() => taskDelete(todoObj.id)} />
                             </div>
                         </div>
                     )
